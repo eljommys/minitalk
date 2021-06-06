@@ -79,9 +79,9 @@ int	ft_atoi(const char *str)
 	return ((long int)(var[0] * var[1]));
 }
 
-size_t		ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	while (s[len] != 0)
