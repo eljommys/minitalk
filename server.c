@@ -67,7 +67,6 @@ int	main(void)
 	free(pid);
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
-	signal(SIGINT, handler);
 	while (1)
 	{
 	}
