@@ -1,3 +1,13 @@
+CLIENT = client
+
+SERVER = server
+
+CLIENT_SRC =	utils.c\
+				client.c\
+
+SERVER_SRC =	utils.c\
+				server.c\
+
 CC = gcc
 
 CFLAGS += -Wall -Werror -Wextra -g3 -fsanitize=address
@@ -6,32 +16,22 @@ CFLAGS += -Wall -Werror -Wextra -g3 -fsanitize=address
 
 RM = rm -rf
 
-LIBFT = libft.a
-LIBFTDIR = libft/
-LIBFTLINK = -L $(LIBFTDIR) -lft
-
-
-all: complib client server echoOK
-
-complib: echoLibft
-	$(MAKE) -C $(LIBFTDIR)
+all: client server echoOK
 
 client: echoClient
-	$(CC) $(CFLAGS) client.c $(LIBFTDIR)$(LIBFT) -o client
+	$(CC) $(CFLAGS) client.c -o client
 
 server: echoServer
-	$(CC) $(CFLAGS) server.c $(LIBFTDIR)$(LIBFT) -o server
+	$(CC) $(CFLAGS) server.c -o server
 
 %.o:		%.c
 	$(CC) -c $(CFLAGS) -o $@ $<
 	printf "$(GREEN)██"
 
-clean: echoCLEAN
-	$(MAKE) -C $(LIBFTDIR) clean
+clean:
+	$(RM) server client
 
 fclean: clean echoFCLEAN
-	$(MAKE) -C $(LIBFTDIR) fclean
-	$(RM) server client
 
 re:		fclean all
 
@@ -45,7 +45,7 @@ git:
 	git push
 
 norme:
-	norminette ./*.c ./minitalk.h ./libft/*.c ./libft/lift.h
+	norminette ./*.c ./minitalk.h
 
 .PHONY:		all clean fclean re leaks git norme
 .SILENT:
@@ -60,8 +60,6 @@ END = \033[0m
 
 ##############______________MESSAGES______________##############
 
-echoLibft:
-	echo "$(YELLOW)===> Compiling $(RED)Libft$(END)\n"
 echoServer:
 	echo "$(YELLOW)===> Compiling $(RED)Server$(END)\n"
 echoClient:

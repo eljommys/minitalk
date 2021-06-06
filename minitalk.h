@@ -16,7 +16,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
-# include "libft/libft.h"
+# include <stdlib.h>
+# include "utils.c"
 
 # ifndef BUFFERSIZE
 #  define BUFFERSIZE 1024
@@ -37,5 +38,9 @@ typedef struct s_string
 }				t_string;
 
 t_string	g_str = {{0}, {{0}, 0}, 0, 0};
+
+char	*ft_itoa(long long int n);
+int		ft_atoi(const char *str);
+size_t	ft_strlen(const char *s);
 
 #endif
