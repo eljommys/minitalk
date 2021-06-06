@@ -12,6 +12,8 @@
 
 #include "minitalk.h"
 
+t_string	g_str = {{0}, {{0}, 0}, 0, 0};
+
 char	arr_to_byte(int *arr)
 {
 	char	byte;

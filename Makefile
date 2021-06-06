@@ -2,11 +2,15 @@ CLIENT = client
 
 SERVER = server
 
-CLIENT_SRC =	utils.c\
-				client.c\
+CLT_SRC =	utils.c\
+			client.c\
 
-SERVER_SRC =	utils.c\
-				server.c\
+SRV_SRC =	utils.c\
+			server.c\
+
+CLT_OBJ = $(CLT_SRC:.c=.o)
+
+SRV_OBJ = $(SRV_SRC:.c=.o)
 
 CC = gcc
 
@@ -16,22 +20,25 @@ CFLAGS += -Wall -Werror -Wextra -g3 -fsanitize=address
 
 RM = rm -rf
 
-all: client server echoOK
+all: $(CLIENT) $(SERVER) echoOK
+	$(CC) $(CFLAGS) $(CLT_OBJ) -o $(CLIENT)
+	$(CC) $(CFLAGS) $(SRV_OBJ) -o $(SERVER)
 
-client: echoClient
-	$(CC) $(CFLAGS) client.c -o client
+$(CLIENT): $(CLT_OBJ) echoClient
+	$(CC) $(CLT_SRC) -c
 
-server: echoServer
-	$(CC) $(CFLAGS) server.c -o server
+$(SERVER): $(SRV_OBJ) echoServer
+	$(CC) $(SRV_SRC) -c
 
 %.o:		%.c
 	$(CC) -c $(CFLAGS) -o $@ $<
 	printf "$(GREEN)██"
 
 clean:
-	$(RM) server client
+	$(RM) $(CLT_OBJ) $(SRV_OBJ)
 
 fclean: clean echoFCLEAN
+	$(RM) $(CLIENT) $(SERVER)
 
 re:		fclean all
 
