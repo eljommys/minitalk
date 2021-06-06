@@ -29,11 +29,14 @@ char	*ft_itoa(long long int n)
 	char				*str;
 
 	tmpn = n;
-	len = 2;
+	len = 1;
 	negative = 0;
 	itoa_isnegative(&n, &negative);
-	while (tmpn /= 10)
+	while (tmpn % 10)
+	{
+		tmpn /= 10;
 		len++;
+	}
 	len += negative;
 	if ((str = (char*)malloc(sizeof(char) * len)) == NULL)
 		return (NULL);
