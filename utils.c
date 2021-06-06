@@ -12,36 +12,37 @@
 
 #include "minitalk.h"
 
-static	void	itoa_isnegative(long long int *n, int *negative)
+static	char	*itoa_len(long long int n, int *negative, int *len)
 {
-	if (*n < 0)
+	char	*str;
+
+	while (n % 10)
 	{
-		*n *= -1;
-		*negative = 1;
+		n /= 10;
+		(*len)++;
 	}
+	*len += *negative;
+	str = (char *)malloc(sizeof(char) * *len);
+	str[--(*len)] = '\0';
+	return (str);
 }
 
 char	*ft_itoa(long long int n)
 {
-	long long int		tmpn;
 	int					len;
 	int					negative;
 	char				*str;
 
-	tmpn = n;
 	len = 1;
 	negative = 0;
-	itoa_isnegative(&n, &negative);
-	while (tmpn % 10)
+	if (n < 0)
 	{
-		tmpn /= 10;
-		len++;
+		n *= -1;
+		negative = 1;
 	}
-	len += negative;
-	str = (char*)malloc(sizeof(char) * len);
-	if (str == NULL)
+	str = itoa_len(n, &negative, &len);
+	if (!str)
 		return (NULL);
-	str[--len] = '\0';
 	while (len--)
 	{
 		str[len] = n % 10 + '0';
